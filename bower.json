@@ -1,0 +1,27 @@
+{
+  "name": "jukebox",
+  "description": "PMI, UXDI, & WDI Collaboration Project",
+  "main": "server.js",
+  "authors": [
+    "Matthias Jordan",
+    "Angel Pang",
+    "and Josh Fadem"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "express": "^4.13.4",
+    "body-parser": "^1.15.0",
+    "path": "^3.46.1",
+    "cors": "*",
+    "mongoose": "^4.4.12"
+  }
+}
