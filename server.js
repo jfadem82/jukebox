@@ -1,13 +1,18 @@
-var expres 			= require('express'),
-	app				= express(),
-	bodyParser		= require('body-parser'),
-	morgan			= require('morgan'),
-	path			= require('path'),
-	mongoose		= require('mongoose'),
-	cors			= require('cors'),
-	apiRouter		= require('./api/routes/Routes'),
-	port 			= process.env.PORT || 3000
-	mongoUri		= process.env.mLab || 'mongodb://localhost:27017/jukebox'
+var expres 				= require('express'),
+	app					= express(),
+	bodyParser			= require('body-parser'),
+	cookieParser 		= require('cookie-parser'),
+	methodOverride		= require('method-override'),
+	morgan				= require('morgan'),
+	path				= require('path'),
+	mongoose			= require('mongoose'),
+	cors				= require('cors'),
+	passport 			= require('passport'),
+	passportSoundcloud	= require('passport-soundcloud'),
+	passportSpotify		= require('passport-spotify'),
+	apiRouter			= require('./api/routes/Routes'),
+	port 				= process.env.PORT || 3000
+	mongoUri			= process.env.mLab || 'mongodb://localhost:27017/jukebox'
 
 mongoose.connect(mongoUri)
 

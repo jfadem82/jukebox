@@ -22,6 +22,7 @@
     "body-parser": "^1.15.0",
     "path": "^3.46.1",
     "cors": "*",
-    "mongoose": "^4.4.12"
+    "mongoose": "^4.4.12",
+    "passport": "^0.3.2"
   }
 }
