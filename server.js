@@ -1,4 +1,4 @@
-var expres 				= require('express'),
+var express 			= require('express'),
 	app					= express(),
 	bodyParser			= require('body-parser'),
 	cookieParser 		= require('cookie-parser'),
@@ -20,6 +20,16 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.get('/auth/soundcloud',
+  passport.authenticate('soundcloud'));
+
+app.get('/auth/soundcloud/callback', 
+  passport.authenticate('soundcloud', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 app.use('/api', apiRouter)
 
