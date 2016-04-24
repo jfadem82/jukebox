@@ -1,1 +1,1 @@
-angular.module('jukebox', [])
+angular.module('jukebox', ['ui.router', 'angular-jwt'])

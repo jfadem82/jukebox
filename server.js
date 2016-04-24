@@ -10,7 +10,8 @@ var express 			= require('express'),
 	passport 			= require('passport'),
 	passportSoundcloud	= require('passport-soundcloud'),
 	passportSpotify		= require('passport-spotify'),
-	apiRouter			= require('./api/routes/Routes'),
+    auth        		= require('./api/config/auth.js'),
+	apiRouter			= require('./api/routes/Routes')
 	port 				= process.env.PORT || 3000
 	mongoUri			= process.env.mLab || 'mongodb://localhost:27017/jukebox'
 

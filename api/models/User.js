@@ -1,6 +1,7 @@
-var mongoose = require('mongoose'),
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
-var User = mongoose.Schema(){
+var UserSchema = new Schema({
 	soundcloud: {
    	id		  		: Number,
    	username  		: String,
@@ -9,6 +10,6 @@ var User = mongoose.Schema(){
    	permalink_url	: String,
    	avatar_url		: String
 	}
-}
+})
 
-module.exports mongoose.model("User", User);
+module.exports = mongoose.model("User", UserSchema);
