@@ -20,12 +20,21 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
+<<<<<<< HEAD
     "cors": "^2.7.1",
     "express": "^4.13.4",
+||||||| merged common ancestors
+=======
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^5.7.0",
+>>>>>>> upstream/master
     "method-override": "^2.3.5",
     "mongoose": "^4.4.13",
     "morgan": "^1.7.0",
+    "passport": "^0.3.2",
     "passport-soundcloud": "^0.1.2",
-    "passport-spotify": "^0.3.0"
+    "passport-spotify": "^0.3.0",
+    "path": "^0.12.7"
   }
 }
