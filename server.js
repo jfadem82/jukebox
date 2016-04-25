@@ -20,7 +20,19 @@ mongoose.connect(mongoUri)
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(passport.initialize());
+app.use(passport.session()); 
+// app.use(flash()); 
+
+require('./api/config/passport')(passport);
+
+app.use(function (req, res, next) {
+  global.user = req.user;
+  next()
+});
 
 app.get('/auth/soundcloud',
   passport.authenticate('soundcloud'));
@@ -35,4 +47,4 @@ app.get('/auth/soundcloud/callback',
 app.use('/api', apiRouter)
 
 app.listen(port)
-console.log('listening on port ' + port)
+console.log('listening on port ' + port) 
