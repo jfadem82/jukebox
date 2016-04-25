@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/jfadem82/jukebox#readme",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
     "method-override": "^2.3.5",
+    "mongoose": "^4.4.13",
     "morgan": "^1.7.0",
     "passport-soundcloud": "^0.1.2",
     "passport-spotify": "^0.3.0"
