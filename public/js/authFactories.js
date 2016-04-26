@@ -64,13 +64,9 @@ function authFactory($http, $q, authTokenFactory, $window){
 		return response
 	})
 }
-authFactory.signup = function(email, password, name, bio){
-	return $http.post('https://revisit-app.herokuapp.com/api/users', {
-		email: email,
-		password: password,
-		name: name,
-		bio: bio
-	})
+authFactory.signup = function(newUser){
+	console.log("got to auth facotry signup");
+	return $http.post('http://localhost:3000/api/users',newUser)
 }
 // handle logout
 authFactory.logout = function(){
