@@ -55,6 +55,27 @@ function authFactory($http, $q, authTokenFactory, $window){
 	authFactory.index = function(){
 		return $http.get('http://localhost:3000/api/users')
 	}
+	authFactory.login = function(email, password){
+	return $http.post('https://revisit-app.herokuapp.com/api/authenticate', {
+		email: email,
+		password: password
+	}).then(function(response){
+		authTokenFactory.setToken(response.data.token)
+		return response
+	})
+}
+authFactory.signup = function(email, password, name, bio){
+	return $http.post('https://revisit-app.herokuapp.com/api/users', {
+		email: email,
+		password: password,
+		name: name,
+		bio: bio
+	})
+}
+// handle logout
+authFactory.logout = function(){
+	authTokenFactory.setToken()
+}
 	// handle logout
 	authFactory.logout = function(){
 		authTokenFactory.setToken()

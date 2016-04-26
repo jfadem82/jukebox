@@ -12,8 +12,9 @@ var express 			= require('express'),
 	passportSoundcloud	= require('passport-soundcloud'),
 	passportSpotify		= require('passport-spotify'),
     auth        		= require('./api/config/auth.js'),
-	apiRouter			= require('./api/routes/Routes')
-	port 				= process.env.PORT || 3000
+	apiRouter			= require('./api/routes/Routes'),
+	SC 								= require('node-soundcloud'),
+	port 				= process.env.PORT || 3000,
 	mongoUri			= process.env.mLab || 'mongodb://localhost:27017/jukebox'
 
 mongoose.connect(mongoUri)
@@ -24,26 +25,35 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(passport.initialize());
-app.use(passport.session());
-// app.use(flash());
-
-require('./api/config/passport')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// // app.use(flash());
+//
+// require('./api/config/passport')(passport);
 
 app.use(function (req, res, next) {
   global.user = req.user;
   next()
 });
 
-app.get('/auth/soundcloud',
-  passport.authenticate('soundcloud'));
+////////////////////// node-soundcloud ////////////////////////////
+// Initialize client
+// SC.init({
+//   id: 'your SoundCloud client ID',
+//   secret: 'your SoundCloud client secret',
+//   uri: 'your SoundCloud redirect URI'
+// });
+//
+// // Connect user to authorize application
+// var initOAuth = function(req, res) {
+//   var url = SC.getConnectUrl();
+//
+//   res.writeHead(301, Location: url);
+//   res.end();
+// };
 
-app.get('/auth/soundcloud/callback',
-  passport.authenticate('soundcloud', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+// Get OAuth token (example endpoint discussed in the next section)
+////////////////////// node-soundcloud ////////////////////////////
 
 app.use('/api', apiRouter)
 
