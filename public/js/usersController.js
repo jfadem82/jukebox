@@ -1,26 +1,49 @@
 angular.module('jukebox')
 	.controller('UsersController', UsersController)
 
-UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory']
+UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log']
 
-function UsersController($state, authFactory, $rootScope, $window, $editFactory) {
+function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log) {
 	var vm = this
 	vm.user = {}
 	vm.api = editFactory
-	vm.loggedIn = authFactory.isLoggedIn();	
+	vm.loggedIn = authFactory.isLoggedIn();
 	vm.signup = signup
 	vm.login = login
 	vm.logout = logout
 	vm.getUser = getUser
 	vm.userid = {}
-	vm.runthis = authFactory.isLoggedIn()
 	vm.error = null
+	vm.getArtist = getArtist;
+	vm.artist = {}
+	vm.songs = []
+	vm.addtoPL = addtoPL
+
+	function addtoPL(song) {
+		console.log("song from function addtoPL",song);
+	}
+
+	function getArtist(artist){
+		vm.songs=[]
+		console.log("req from form", artist);
+    $http({
+      method: 'GET',
+      url : 'https://api.soundcloud.com/tracks?client_id=030341538cff3ba796885fa35911cb51&q='+artist.name
+    })
+    .then(function(response){ //promise
+			for (var i = 0; i < response.data.length; i++) {
+				vm.songs.push(response.data[i])
+			}
+			console.log("vm.songs",vm.songs);
+			//console.log("response",response);
+    })
+  }
 
 	$rootScope.$on('$stateChangeStart', function() {
-		vm.loggedIn = authFactory.isLoggedIn();	
+		vm.loggedIn = authFactory.isLoggedIn();
 		vm.getUser()
 		vm.error = null
-	});	
+	});
 
 	function logout(){
 		$state.go('loggedOut')
@@ -61,5 +84,3 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory)
 		})
 	}
 }
-
-

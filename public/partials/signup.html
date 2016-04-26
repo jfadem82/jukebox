@@ -1,0 +1,8 @@
+<h1>Create New User</h1>
+<form ng-submit="usersCtrl.create()">
+<input type="text" ng-model="main.newUser.name" placeholder="Name">
+<input type="email" ng-model="main.newUser.email" placeholder="Email">
+<!-- <input type="text" ng-model="main.newUser.admin" placeholder="Admin"> -->
+<input type="password" ng-model="main.newUser.password" placeholder="Password">
+<button type="submit">Create User</button>
+</form>
