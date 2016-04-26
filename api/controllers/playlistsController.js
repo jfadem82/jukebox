@@ -1,8 +1,8 @@
-var Playlist = require('../models/Playlist');
-var User	 = require('../models/User');
+var Playlist = require('../models/Playlist.js');
+var User	 = require('../models/User.js');
 
 function index(req, res){
-	Playlist.find(function(err, playlists){
+	Playlist.find({}, function(err, playlists){
 		if(err) res.send(err)
 		res.json(playlists)
 	})
@@ -42,4 +42,12 @@ function deletePlaylist(req,res){
 		if(err) throw err
 		res.json({message:"playlist deleted!"})
 	})
+}
+
+module.exports = {
+	index: index,
+  create: create,
+  getOnePlaylist: getOnePlaylist,
+  updatePlaylist: updatePlaylist,
+	deletePlaylist: deletePlaylist
 }

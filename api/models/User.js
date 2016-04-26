@@ -1,13 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Playlist = require('Playlist');
+var Playlist = require('./Playlist.js');
 
 var UserSchema = new Schema({
-	userName: { type: String, required: true },
+	userName: String,
 	playlist: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Playlist'
 	}
 });
 
-module.exports = mongoose.model("User", UserSchema);
+var User = mongoose.model('User', UserSchema)
+
+module.exports = User;
