@@ -29,7 +29,8 @@ function create(req,res){
 
 function show(req, res){
 	//get a single user -- show
-	User.findById(req.params.user_id, function(err, user){
+  console.log("show user req.params", req.params);
+	User.findOne({userName: req.params.userName}, function(err, user){
 		if(err) res.send(err)
 		res.json(user)
 	})
