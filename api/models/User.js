@@ -1,15 +1,13 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var Playlist = require('Playlist');
 
 var UserSchema = new Schema({
-	soundcloud: {
-   	id		  		: Number,
-   	username  		: String,
-   	permalink 		: String,
-   	uri		  		: String,
-   	permalink_url	: String,
-   	avatar_url		: String
+	userName: { type: String, required: true },
+	playlist: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Playlist'
 	}
-})
+});
 
 module.exports = mongoose.model("User", UserSchema);
