@@ -1,8 +1,13 @@
-<h1>Create New User</h1>
-<form ng-submit="usersCtrl.create()">
-<input type="text" ng-model="main.newUser.name" placeholder="Name">
-<input type="email" ng-model="main.newUser.email" placeholder="Email">
-<!-- <input type="text" ng-model="main.newUser.admin" placeholder="Admin"> -->
-<input type="password" ng-model="main.newUser.password" placeholder="Password">
-<button type="submit">Create User</button>
+<h1>Create an Account</h1>
+<!-- <form ng-submit="usersCtrl.signup()">
+  <input type="text" ng-model="usersCtrl.signup.userName" placeholder="Name">
+  <button type="submit">Create User</button>
+</form> -->
+
+<form>
+  <div class="form-group">
+    <input class="form-control" ng-model="usersCtrl.userName" type="text" placeholder="user name">
+    <button class="btn btn-primary form-control" type="submit" ng-click="usersCtrl.signup(usersCtrl.userName)">Sign up</button>
+  </div>
+
 </form>

@@ -14,6 +14,7 @@ function index(req, res){
 }
 
 function create(req,res){
+    console.log("req.body",req.body);
 		var newUser = new User(req.body)
     newUser.userName = req.body.userName
 		newUser.save(function(err, user){
@@ -21,6 +22,7 @@ function create(req,res){
         console.log("newUser api controller error",err)
         res.json({success: false, error: err, user: user})
       }
+      console.log("got to usersController, response",res);
 			res.json({success: true, message: "User created!", user: user})
 		})
 	}
