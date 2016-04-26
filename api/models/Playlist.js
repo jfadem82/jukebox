@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var User = require('User');
+var User = require('./User.js');
 var Schema = mongoose.Schema
 
 var songSchema = new Schema ({
@@ -11,9 +11,11 @@ var songSchema = new Schema ({
 var playlistSchema = new Schema ({
 	name: String,
 	driver: String,
-	guests: [User.schema],
+	guests: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}],
 	songs: [songSchema]
-
 
 })
 

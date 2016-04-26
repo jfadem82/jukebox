@@ -1,5 +1,5 @@
-var User = require('../models/User');
-var Playlist = require('../models/Playlist');
+var User = require('../models/User.js');
+var Playlist = require('../models/Playlist.js');
 
 function getLogout(req, res) {
   req.logout();
@@ -13,29 +13,17 @@ function index(req, res){
 	})
 }
 
-function create(req, res){
-	// make a single user -- create
-	console.log("Creating a user")
-	var user = new User()
-
-	user.id = req.body.id
-	user.userName = req.body.userName
-
-	
-	console.log("req is " + req)
-	console.log("user is " + userName)
-	console.log("id is " + user.id)
-	user.save(function(err){
-		if(err){ console.log("this error is " + err)
-			if(err.code == 11000){ console.log("nested if")
-				return res.json({success: false, message: "An Account is already associated with that email" })
-			} else {
-				res.send(err)
-			}
-		}
-		res.json({success: true, message: "Nah, Brah"})
-	})
-}
+function create(req,res){
+		var newUser = new User(req.body)
+    newUser.userName = req.body.userName
+		newUser.save(function(err, user){
+			if(err){
+        console.log("newUser api controller error",err)
+        res.json({success: false, error: err, user: user})
+      }
+			res.json({success: true, message: "User created!", user: user})
+		})
+	}
 
 function show(req, res){
 	//get a single user -- show
@@ -45,11 +33,9 @@ function show(req, res){
 	})
 }
 
-
 module.exports = {
   index		: index,
   create	: create,
   show		: show,
-  getLogout	: getLogout,
-  // authenticate: authenticateUser
+  getLogout	: getLogout
 }

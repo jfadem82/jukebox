@@ -30,4 +30,9 @@ function MainRouter($stateProvider, $urlRouterProvider) {
 			templateUrl: 'partials/home.html',
 			controller: 'UsersController as usersCtrl'
 		})
+		.state('search', {
+			url: '/search',
+			templateUrl: 'partials/search.html',
+			controller: 'UsersController as usersCtrl'
+		})
 	}
