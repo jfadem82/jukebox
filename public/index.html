@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
 
 	<script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
-	
+
 	<script src="js/app.js"></script>
 	<script src="js/usersController.js"></script>
 	<script src="js/authFactories.js"></script>
@@ -15,12 +15,18 @@
 	<script src="js/editFactories.js"></script>
 	<script src="js/jwtController.js"></script>
 </head>
-	<body>
+	<body ng-controller="UsersController as usersCtrl">
+
+		<nav>
+			<a ui-sref="login">login</a>
+			<a ui-sref="signup">signup</a>
+			<a ui-sref="home">home</a>
+			<a ui-sref="search">search</a>
+		</nav>
+
 		<div class="container">
-
-		<div ui-view></div>
-	</div>
-
+			<div ui-view></div>
+		</div>
 
 	</body>
 
