@@ -79,8 +79,13 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 		console.log("login user", user);
 		return $http.get('http://localhost:3000/api/users/:user_id', user).then(function(response) {
 			console.log("successfully logged in a user. response:", response);
+		return $http.get('http://localhost:3000/api/users/'+userName)
+		.then(function(response){
+			console.log("login response:",response)
+			$window.localStorage['currentUser'] = response.data._id
+			$state.go('home')
 		})
-	}
+	})
 
 function playlistsFactory($http){
 	var playlistsUrl = 'http://localhost:3000/api/playlists'
@@ -127,18 +132,7 @@ function PlaylistsController (playlistsFactory, $window){
 		.success(function(res){
 			vm.playlists = res
 
-		// console.log("login function userName",userName);
-		// return $http.get('http://localhost:3000/api/users/'+userName)
-		// .then(function(response){
-		// 	console.log("login response:",response)
-		// 	$window.localStorage['currentUser'] = response.data._id
-		// 	$state.go('home')
-
 	
-
-
-
-
 	vm.addPlaylist = function(name, driver, guests, songs ){
 		
 		var data = {name:name, driver:driver, guests:guests, songs:songs}
@@ -182,6 +176,8 @@ function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
 			$location.path('/myplaylists')
 		})
 	}
+}
+})
 }
 }
 }
