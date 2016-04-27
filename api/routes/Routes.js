@@ -12,7 +12,7 @@ apiRouter.route('/users')
 	.get(usersController.index)
 
 //user CRUD
-apiRouter.route('/users/:user_id')
+apiRouter.route('/users/:userName')
 	.get(usersController.show) //works in postman
 	//.delete(usersController.destroy) // works in postman
 

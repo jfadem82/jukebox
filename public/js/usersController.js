@@ -65,11 +65,12 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	}
 
 	function signup(userName){
-			var newUser = {userName:userName}
+		var newUser = {userName:userName}
 		console.log("signup newUser",newUser );
 		return $http.post('http://localhost:3000/api/users', newUser).then(function(response) {
 			console.log("successfully sent a user. response:", response);
-
+			vm.user = response.data
+			login(userName)
 		})
 	}
 
@@ -125,7 +126,14 @@ function PlaylistsController (playlistsFactory, $window){
 	vm.api.list()
 		.success(function(res){
 			vm.playlists = res
-		})
+
+		// console.log("login function userName",userName);
+		// return $http.get('http://localhost:3000/api/users/'+userName)
+		// .then(function(response){
+		// 	console.log("login response:",response)
+		// 	$window.localStorage['currentUser'] = response.data._id
+		// 	$state.go('home')
+
 	
 
 
