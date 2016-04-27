@@ -4,11 +4,10 @@ angular.module('jukebox')
 
 UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log', '$stateParams', '$location']
 
-function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log) {
+function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log){
 	var vm = this
 	vm.user = {}
-	vm.api = editFactory
-	vm.loggedIn = authFactory.isLoggedIn();
+	// vm.loggedIn = authFactory.isLoggedIn();
 	vm.signup = signup
 	vm.login = login
 	vm.logout = logout
@@ -19,7 +18,14 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.artist = {}
 	vm.songs = []
 	vm.addtoPL = addtoPL
+	vm.playlists = []
+	vm.playlist = {}
+	vm.playlistName = ''
+	vm.playlistDriver = ''
+	vm.playlistGuests = []
+	vm.playlistSongs = []
 	vm.userName = ''
+	vm.addPlaylist = addPlaylist
 
 	function addtoPL(song) {
 		console.log("song from function addtoPL",song);
@@ -84,100 +90,104 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 			console.log("login response:",response)
 			$window.localStorage['currentUser'] = response.data._id
 			$state.go('home')
-		})
-	})
-
-function playlistsFactory($http){
-	var playlistsUrl = 'http://localhost:3000/api/playlists'
-	var playlists = {}
-
-	playlists.list = function(){
-		return $http.get(playlistsUrl)
-	}
-
-	playlists.show = function(playlistId){
-		return $http.get(playlistsUrl + '/' + playlistId)
-	}
-
-	playlists.addPlaylist = function(data){
-		console.log("data is " + JSON.stringify(data))
-		
-		return $http.playlist(playlistsUrl, data)
-	}
-
-	playlists.addAlbumPlaylist = function(data){
-		console.log("data is " + JSON.stringify(data))
-
-		return $http.playlist(playlistsUrl, data)
-	}
-
-	playlists.updatePlaylist = function(playlistId,data){
-		console.log("the factory data is " + JSON.stringify(data))
-		return $http.patch(playlistsUrl + '/' + playlistId, data)
-	}
-
-	playlists.removePlaylist = function(playlistId){
-		return $http.delete(playlistsUrl + '/' + playlistId)
-	}
-	
-	return playlists
-}
-
-function PlaylistsController (playlistsFactory, $window){
-	var vm = this;
-	vm.api = playlistsFactory
-	vm.playlists = []
-	vm.newPlaylist = {}
-	vm.api.list()
-		.success(function(res){
-			vm.playlists = res
-
-	
-	vm.addPlaylist = function(name, driver, guests, songs ){
-		
-		var data = {name:name, driver:driver, guests:guests, songs:songs}
-		
-
-		vm.api.addPost(data)
-			.then(function success(res){
-				vm.posts.push(res.data.post)
-				vm.newPost = {}
 			})
-
-	}
-
-function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
-	var vm = this
-	vm.name = 'Playlist Detail'
-	vm.api = playlistsFactory
-	vm.playlist = null
-	vm.editing = false
-	vm.showPlaylist = function(playlistId){
-		console.log("playlist id is " + playlistId)
-		vm.api.show(playlistId).success(function(response){
-			vm.playlist = response
-			console.log(response)
-		})
-	}
-	vm.showPlaylist($stateParams.playlistId)
-
-	vm.updatePlaylist = function(playlistId, name, guests, songs){
-		var data = {name: name, guests:guests, songs:songs}
-		vm.api.updatePlaylist(playlistId,data).success(function(response){
-			console.log(response)
-			vm.playlist = response
-			vm.editing = false
 		})
 	}
 
-	vm.removePlaylist = function(playlistId){
-		vm.api.removePlaylist(playlistId).success(function(response){
-			console.log(response)
-			$location.path('/myplaylists')
+// function playlistsFactory($http){
+// 	var playlistsUrl = 'http://localhost:3000/api/playlists'
+// 	var playlists = {}
+
+// 	playlists.list = function(){
+// 		return $http.get(playlistsUrl)
+// 	}
+
+// 	playlists.show = function(playlistId){
+// 		return $http.get(playlistsUrl + '/' + playlistId)
+// 	}
+
+// 	playlists.addPlaylist = function(data){
+// 		console.log("data is " + JSON.stringify(data))
+
+// 		return $http.playlist(playlistsUrl, data)
+// 	}
+
+// 	playlists.addAlbumPlaylist = function(data){
+// 		console.log("data is " + JSON.stringify(data))
+
+// 		return $http.playlist(playlistsUrl, data)
+// 	}
+
+// 	playlists.updatePlaylist = function(playlistId,data){
+// 		console.log("the factory data is " + JSON.stringify(data))
+// 		return $http.patch(playlistsUrl + '/' + playlistId, data)
+// 	}
+
+// 	playlists.removePlaylist = function(playlistId){
+// 		return $http.delete(playlistsUrl + '/' + playlistId)
+// 	}
+
+// 	return playlists
+// }
+
+// function PlaylistsController (playlistsFactory, $window){
+// 	var vm = this;
+// 	vm.api = playlistsFactory
+// 	vm.playlists = []
+// 	vm.newPlaylist = {}
+// 	vm.api.list()
+// 		.success(function(res){
+// 			vm.playlists = res
+
+	// function signup(userName){
+	// 	var newUser = {userName:userName}
+	// 	console.log("signup newUser",newUser );
+	// 	return $http.post('http://localhost:3000/api/users', newUser).then(function(response) {
+	// 		console.log("successfully sent a user. response:", response);
+	// 		vm.user = response.data
+	// 		login(userName)
+	// 	})
+	// }
+
+function addPlaylist(playlistName){
+
+	var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
+		//console.log('creating newPlaylist, data:', data);
+		console.log('creating newPlaylist', newPlaylist);
+		return $http.post('http://localhost:3000/api/playlists', newPlaylist).then(function(response){
+		 console.log("successfully sent a playlist. response:", response);
+		 vm.playlist = response.data
 		})
 	}
-}
-})
-}
-}
+
+// function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
+// 	var vm = this
+// 	vm.name = 'Playlist Detail'
+// 	vm.api = playlistsFactory
+// 	vm.playlist = null
+// 	vm.editing = false
+// 	vm.showPlaylist = function(playlistId){
+// 		console.log("playlist id is " + playlistId)
+// 		vm.api.show(playlistId).success(function(response){
+// 			vm.playlist = response
+// 			console.log(response)
+// 		})
+// 	}
+// 	vm.showPlaylist($stateParams.playlistId)
+
+// 	vm.updatePlaylist = function(playlistId, name, guests, songs){
+// 		var data = {name: name, guests:guests, songs:songs}
+// 		vm.api.updatePlaylist(playlistId,data).success(function(response){
+// 			console.log(response)
+// 			vm.playlist = response
+// 			vm.editing = false
+// 		})
+// 	}
+
+// 	vm.removePlaylist = function(playlistId){
+// 		vm.api.removePlaylist(playlistId).success(function(response){
+// 			console.log(response)
+// 			$location.path('/myplaylists')
+// 		})
+// 	}
 }

@@ -4,10 +4,10 @@ var Playlist = require('./Playlist.js');
 
 var UserSchema = new Schema({
 	userName: String,
-	playlist: {
+	playlists: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Playlist'
-	}
+	}]
 });
 
 var User = mongoose.model('User', UserSchema)

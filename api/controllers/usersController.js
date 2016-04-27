@@ -17,6 +17,7 @@ function create(req,res){
     console.log("req.body",req.body);
 		var newUser = new User(req.body)
     newUser.userName = req.body.userName
+    //newUser.playlists = []
 		newUser.save(function(err, user){
 			if(err){
         console.log("newUser api controller error",err)

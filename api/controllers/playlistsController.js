@@ -9,14 +9,26 @@ function index(req, res){
 }
 
 function create(req, res){
+	console.log("api playlistsController create req:",req);
 	var playlist 		= new Playlist()
-	playlist.name		= req.body.name
-	playlist.driver = req.body.driver
+	playlist.name		= req.body.playlistName
+	playlist.driver = req.body.playlistDriver
 	playlist.guest  = req.body.guest
 	playlist.song 	= req.body.song
-	newPlaylist.save(function(err, playlist){
+	playlist.save(function(err, playlist){
 		if(err) throw err
-		res.json({message: "Playlist Saved!", playlist: playlist})
+		User.findById(req.body.playlistDriver, function(err,user) {
+			if(err) console.log("user playlist error", err);
+			//console.log("adding playlist to user, user:",user);
+			//user.playlists += playlist._id
+			user.playlists.push(playlist._id)
+			console.log("user after playlist added",user);
+			// user.save(function(err,user) {
+			// 	if(err) console.log("user save error",err);
+			// 	console.log("user after playlist added", user);
+			// })
+			res.json({message: "Playlist Saved!", playlist: playlist, user:user})
+		})
 	})
 }
 
