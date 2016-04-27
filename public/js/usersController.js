@@ -26,6 +26,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.playlistSongs = []
 	vm.userName = ''
 	vm.addPlaylist = addPlaylist
+	vm.indexPlaylists = indexPlaylists
 
 	function addtoPL(song) {
 		console.log("song from function addtoPL",song);
@@ -97,10 +98,22 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 // function playlistsFactory($http){
 // 	var playlistsUrl = 'http://localhost:3000/api/playlists'
 // 	var playlists = {}
+function indexPlaylists() {
+	//return
+	$http.get('http://localhost:3000/api/users/id/'+$window.localStorage['currentUser'])
+	.then(function(response) {
+		console.log("get a user playlist. response:", response);
+		//vm.user.playlists = response.data.playlists
+	})
+}
+if ($state.current.name == 'playlists') {
+	indexPlaylists()
+	//console.log("vm.user:",vm.user);
+}
 
-// 	playlists.list = function(){
-// 		return $http.get(playlistsUrl)
-// 	}
+// vm.playlists.list = function(){
+// 	return $http.get(playlistsUrl)
+// }
 
 // 	playlists.show = function(playlistId){
 // 		return $http.get(playlistsUrl + '/' + playlistId)

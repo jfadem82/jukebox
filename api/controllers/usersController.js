@@ -36,10 +36,19 @@ function show(req, res){
 		res.json(user)
 	})
 }
+function showbyid(req, res){
+	//get a single user -- show
+  console.log("show user req.params", req.params);
+	User.findOne({_id: req.params.id}, function(err, user){
+		if(err) res.send(err)
+		res.json(user)
+	})
+}
 
 module.exports = {
   index		: index,
   create	: create,
   show		: show,
-  getLogout	: getLogout
+  getLogout	: getLogout,
+  showbyid: showbyid
 }
