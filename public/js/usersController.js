@@ -1,6 +1,6 @@
 angular.module('jukebox')
 	.controller('UsersController', UsersController)
-	.factory('PlaylistsFactory', PlaylistsController)
+	// .factory('PlaylistsFactory', PlaylistsFactory)
 
 UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log', '$stateParams', '$location']
 
@@ -73,13 +73,13 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 		})
 	}
 
-	// function login(userName){
-	// 	var user = {userName:userName}
-	// 	console.log("login user", user);
-	// 	return $http.get('http://localhost:3000/api/users/:user_id', user).then(function(response) {
-	// 		console.log("successfully logged in a user. response:", response);
-	// 	})
-	// }
+	function login(userName){
+		var user = {userName:userName}
+		console.log("login user", user);
+		return $http.get('http://localhost:3000/api/users/:user_id', user).then(function(response) {
+			console.log("successfully logged in a user. response:", response);
+		})
+	}
 
 function playlistsFactory($http){
 	var playlistsUrl = 'http://localhost:3000/api/playlists'
@@ -174,5 +174,6 @@ function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
 			$location.path('/myplaylists')
 		})
 	}
+}
 }
 }
