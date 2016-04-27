@@ -12,8 +12,8 @@ var playlistSchema = new Schema ({
 	name: String,
 	driver: String,
 	guests: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'User'
 	}],
 	songs: [songSchema]
 

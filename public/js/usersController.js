@@ -1,7 +1,8 @@
 angular.module('jukebox')
 	.controller('UsersController', UsersController)
+	// .factory('PlaylistsFactory', PlaylistsFactory)
 
-UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log']
+UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log', '$stateParams', '$location']
 
 function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log) {
 	var vm = this
@@ -74,12 +75,109 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	}
 
 	function login(userName){
-		console.log("login function userName",userName);
+		var user = {userName:userName}
+		console.log("login user", user);
+		return $http.get('http://localhost:3000/api/users/:user_id', user).then(function(response) {
+			console.log("successfully logged in a user. response:", response);
 		return $http.get('http://localhost:3000/api/users/'+userName)
 		.then(function(response){
 			console.log("login response:",response)
 			$window.localStorage['currentUser'] = response.data._id
 			$state.go('home')
 		})
+	})
+
+function playlistsFactory($http){
+	var playlistsUrl = 'http://localhost:3000/api/playlists'
+	var playlists = {}
+
+	playlists.list = function(){
+		return $http.get(playlistsUrl)
 	}
+
+	playlists.show = function(playlistId){
+		return $http.get(playlistsUrl + '/' + playlistId)
+	}
+
+	playlists.addPlaylist = function(data){
+		console.log("data is " + JSON.stringify(data))
+		
+		return $http.playlist(playlistsUrl, data)
+	}
+
+	playlists.addAlbumPlaylist = function(data){
+		console.log("data is " + JSON.stringify(data))
+
+		return $http.playlist(playlistsUrl, data)
+	}
+
+	playlists.updatePlaylist = function(playlistId,data){
+		console.log("the factory data is " + JSON.stringify(data))
+		return $http.patch(playlistsUrl + '/' + playlistId, data)
+	}
+
+	playlists.removePlaylist = function(playlistId){
+		return $http.delete(playlistsUrl + '/' + playlistId)
+	}
+	
+	return playlists
+}
+
+function PlaylistsController (playlistsFactory, $window){
+	var vm = this;
+	vm.api = playlistsFactory
+	vm.playlists = []
+	vm.newPlaylist = {}
+	vm.api.list()
+		.success(function(res){
+			vm.playlists = res
+
+	
+	vm.addPlaylist = function(name, driver, guests, songs ){
+		
+		var data = {name:name, driver:driver, guests:guests, songs:songs}
+		
+
+		vm.api.addPost(data)
+			.then(function success(res){
+				vm.posts.push(res.data.post)
+				vm.newPost = {}
+			})
+
+	}
+
+function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
+	var vm = this
+	vm.name = 'Playlist Detail'
+	vm.api = playlistsFactory
+	vm.playlist = null
+	vm.editing = false
+	vm.showPlaylist = function(playlistId){
+		console.log("playlist id is " + playlistId)
+		vm.api.show(playlistId).success(function(response){
+			vm.playlist = response
+			console.log(response)
+		})
+	}
+	vm.showPlaylist($stateParams.playlistId)
+
+	vm.updatePlaylist = function(playlistId, name, guests, songs){
+		var data = {name: name, guests:guests, songs:songs}
+		vm.api.updatePlaylist(playlistId,data).success(function(response){
+			console.log(response)
+			vm.playlist = response
+			vm.editing = false
+		})
+	}
+
+	vm.removePlaylist = function(playlistId){
+		vm.api.removePlaylist(playlistId).success(function(response){
+			console.log(response)
+			$location.path('/myplaylists')
+		})
+	}
+}
+})
+}
+}
 }

@@ -1,10 +1,10 @@
 angular.module('jukebox')
 	.config(MainRouter)
-	.config(interceptor)
+	// .config(interceptor)
 
-function interceptor($httpProvider) {
-	$httpProvider.interceptors.push('authInterceptorFactory')
-}
+// function interceptor($httpProvider) {
+// 	$httpProvider.interceptors.push('authInterceptorFactory')
+// }
 
 function MainRouter($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/home')
@@ -35,4 +35,19 @@ function MainRouter($stateProvider, $urlRouterProvider) {
 			templateUrl: 'partials/search.html',
 			controller: 'UsersController as usersCtrl'
 		})
+		.state('playlists', {
+			url: '/playlists',
+			templateUrl: 'partials/playlists.html',
+			controller: 'UsersController as usersCtrl'
+		})
+		.state('detail', {
+			url:'/playlists/:playlistId',
+			templateUrl: 'partials/playlist-detail.html',
+			controller: 'UsersController as usersCtrl'
+		})
+		.state('edit-playlist', {
+			url: '/edit-playlist',
+			templateUrl: 'partials/edit-playlist.html',
+			controller: 'UsersController as usersCtrl'
+		})	
 	}
