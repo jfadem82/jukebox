@@ -9,8 +9,8 @@ function index(req, res){
 }
 
 function create(req, res){
-	var playlist = new Playlist()
-	playlist.name	= req.body.name
+	var playlist 		= new Playlist()
+	playlist.name		= req.body.name
 	playlist.driver = req.body.driver
 	playlist.guest  = req.body.guest
 	playlist.song 	= req.body.song
