@@ -23,11 +23,11 @@ function create(req, res){
 			//user.playlists += playlist._id
 			user.playlists.push(playlist._id)
 			console.log("user after playlist added",user);
-			// user.save(function(err,user) {
-			// 	if(err) console.log("user save error",err);
-			// 	console.log("user after playlist added", user);
-			// })
-			res.json({message: "Playlist Saved!", playlist: playlist, user:user})
+			user.save(function(err,user) {
+				if(err) console.log("user save error",err);
+				console.log("user after playlist added", user);
+				res.json({message: "Playlist Saved!", playlist: playlist, user:user})
+			})
 		})
 	})
 }

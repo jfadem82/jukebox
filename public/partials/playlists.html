@@ -1,0 +1,32 @@
+<h2>Your Playlists</h2>
+
+<label>Search: <input ng-model="searchText"></label>
+
+<table id="searchTextResults" class="table">
+    <thead>
+        <tr>
+            <th>Your Playlists</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="p in usersCtrl.user.playlists | filter:searchText">
+            <td><a ui-sref="home">{{p.name}}</a></td> <!--playlist detail -->
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+<hr>
+
+<!-- <table id="searchTextResults" class="table">
+    <thead>
+        <tr>
+            <th>Playlists You are invited To</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="s in usersCtrl.songs | filter:searchText">
+            <td><a href="#" ng-click="usersCtrl.addtoPL(s.id)">{{s.title}}</a></td>
+        </tr>
+    </tbody>
+</table> -->

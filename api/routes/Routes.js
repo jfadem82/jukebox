@@ -11,6 +11,9 @@ apiRouter.route('/users')
 	.post(usersController.create)
 	.get(usersController.index)
 
+apiRouter.route('/users/id/:id')
+	.get(usersController.showbyid)
+
 //user CRUD
 apiRouter.route('/users/:userName')
 	.get(usersController.show) //works in postman
