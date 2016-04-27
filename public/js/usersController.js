@@ -4,7 +4,7 @@ angular.module('jukebox')
 
 UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log', '$stateParams', '$location']
 
-function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log) {
+function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log){
 	var vm = this
 	vm.user = {}
 	// vm.loggedIn = authFactory.isLoggedIn();
@@ -25,6 +25,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.playlistGuests = []
 	vm.playlistSongs = []
 	vm.userName = ''
+	vm.addPlaylist = addPlaylist
 
 	function addtoPL(song) {
 		console.log("song from function addtoPL",song);
@@ -89,8 +90,9 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 			console.log("login response:",response)
 			$window.localStorage['currentUser'] = response.data._id
 			$state.go('home')
+			})
 		})
-	})
+	}
 
 // function playlistsFactory($http){
 // 	var playlistsUrl = 'http://localhost:3000/api/playlists'
@@ -147,9 +149,10 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	// 	})
 	// }
 
-function addPlaylist(playlistName, playlistDriver, playlistGuests){
+function addPlaylist(playlistName){
 
-	var newPlaylist = {playlistName:playlistName, playlistDriver:playlistDriver, playlistGuests:playlistGuests}
+	var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
+		//console.log('creating newPlaylist, data:', data);
 		console.log('creating newPlaylist', newPlaylist);
 		return $http.post('http://localhost:3000/api/playlists', newPlaylist).then(function(response){
 		 console.log("successfully sent a playlist. response:", response);
@@ -187,5 +190,4 @@ function addPlaylist(playlistName, playlistDriver, playlistGuests){
 // 			$location.path('/myplaylists')
 // 		})
 // 	}
-}
 }
