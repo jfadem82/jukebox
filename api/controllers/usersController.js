@@ -17,6 +17,7 @@ function create(req,res){
     console.log("req.body",req.body);
 		var newUser = new User(req.body)
     newUser.userName = req.body.userName
+    //newUser.playlists = []
 		newUser.save(function(err, user){
 			if(err){
         console.log("newUser api controller error",err)
@@ -29,7 +30,8 @@ function create(req,res){
 
 function show(req, res){
 	//get a single user -- show
-	User.findById(req.params.user_id, function(err, user){
+  console.log("show user req.params", req.params);
+	User.findOne({userName: req.params.userName}, function(err, user){
 		if(err) res.send(err)
 		res.json(user)
 	})
