@@ -50,7 +50,7 @@ function MainRouter($stateProvider, $urlRouterProvider) {
 
 		.state('detail', {
 			url:'/playlists/:playlistId',
-			templateUrl: 'partials/playlist-detail.html',
+			templateUrl: 'partials/detail.html',
 			controller: 'UsersController as usersCtrl'
 		})
 

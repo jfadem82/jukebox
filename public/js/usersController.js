@@ -4,7 +4,7 @@ angular.module('jukebox')
 
 UsersController.$inject = ['$state', 'authFactory', '$rootScope', '$window', 'editFactory', '$http', '$log', '$stateParams', '$location']
 
-function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log){
+function UsersController($state, authFactory, $rootScope, $window, $editFactory, $http, $log, $stateParams){
 	var vm = this
 	vm.user = {}
 	// vm.loggedIn = authFactory.isLoggedIn();
@@ -108,8 +108,8 @@ function indexPlaylists() {
 	//return
 	$http.get('http://localhost:3000/api/users/id/'+$window.localStorage['currentUser'])
 	.then(function(response) {
-		console.log("get a user playlist. response:", response);
-
+		//console.log("get a user playlist. response:", response);
+		vm.playlists = response.data.playlists
 		//vm.user.playlists = response.data.playlists
 	})
 }
@@ -118,6 +118,13 @@ if ($state.current.name == 'playlists') {
 	//console.log("vm.user:",vm.user);
 }
 
+if ($state.current.name == 'detail') {
+	//console.log("state parmas", $stateParams.playlistId);
+	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
+		console.log("this here is the results of playlist",results)
+		vm.playlist = results
+	})
+}
 // vm.playlists.list = function(){
 // 	return $http.get(playlistsUrl)
 // }

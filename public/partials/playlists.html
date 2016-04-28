@@ -9,8 +9,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="p in usersCtrl.user.playlists | filter:searchText">
-            <td><a ui-sref="home">{{p.name}}</a></td> <!--playlist detail -->
+        <tr ng-repeat="p in usersCtrl.playlists | filter:searchText">
+            <td><a ui-sref="detail({playlistId: p._id})">{{p.name}}</a></td> <!--playlist detail -->
         </tr>
     </tbody>
 </table>

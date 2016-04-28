@@ -37,6 +37,7 @@ line-height:1.2
 			<a ui-sref="home">home</a>
 			<a ui-sref="search">search</a>
 			<a ui-sref="newplaylist">new playlist</a></h3>
+			<a ui-sref="playlists">Your playlist</a></h3>
 		</nav>
 
 		<div class="container">
@@ -76,17 +77,34 @@ line-height:1.2
 					})
 					//////////////////// Essential Event Finish ///////////////////////
 					widget.bind(SC.Widget.Events.FINISH, function(){
-            var div = document.getElementById('next')
-						div.setAttribute("ng-init", "usersCtrl.nextsong()")
-						console.log("the finish thing is happening!!!!!!!!");
+            //var div = document.getElementById('next')
+						//div.setAttribute("ng-init", "usersCtrl.nextsong()")
+						function simulateClick() {
+						  var event = new MouseEvent('click', {
+						    'view': window,
+						    'bubbles': true,
+						    'cancelable': true
+						  });
+						  var cb = document.getElementById('next');
+						  var canceled = !cb.dispatchEvent(event);
+						  if (canceled) {
+						    // A handler called preventDefault.
+						    alert("canceled");
+						  } else {
+						    // None of the handlers called preventDefault.
+								console.log("this shit fired off");
+						  }
+						}
+						simulateClick()
+						//console.log("the finish thing is happening!!!!!!!!");
           })
 					//////////////////// Essential Event Finish ///////////////////////
-					var div = document.getElementById('next')
-					div.setAttribute("ng-init", "usersCtrl.nextsong()")
+					// var div = document.getElementById('next')
+					// div.setAttribute("ng-click", "usersCtrl.nextsong()")
 		    });
 			}());
 		</script>
-		<div id="next"></div>
+		<button type="button" id="next" name="button" ng-click="usersCtrl.nextsong()">Next Song</button>
 
 
 	</body>

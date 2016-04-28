@@ -33,7 +33,7 @@ function create(req, res){
 }
 
 function getOnePlaylist(req,res){
-	Post.findById(req.params.id, function(err,playlist){
+	Playlist.findById(req.params.id, function(err,playlist){
 		if(err) throw err
 		res.json(playlist)
 	})
