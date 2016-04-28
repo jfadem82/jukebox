@@ -1,0 +1,16 @@
+<h1>Playlist</h1>
+
+<h3>{{usersCtrl.playlist.name}}</h3>
+
+<table id="searchTextResults" class="table">
+    <thead>
+        <tr>
+            <th>Songs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="s in usersCtrl.playlist | filter:searchText">
+            <td>{{s.name}}</td> <button type="button" ng-clic="usersCtrl.removeSong()" name="button">Remove Song</button>
+        </tr>
+    </tbody>
+</table>
