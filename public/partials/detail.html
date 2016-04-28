@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="s in usersCtrl.songs | filter:searchText">
-            <td><a href="#" ng-click="usersCtrl.addtoPL({songId:s.id, playlistId:usersCtrl.playlist._id})">{{s.title}}</a></td>
+            <td><a href="#" ng-click="usersCtrl.addtoPL({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist})">{{s.title}}</a></td>
         </tr>
     </tbody>
 </table>
