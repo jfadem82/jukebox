@@ -14,15 +14,29 @@
 	<script src="js/router.js"></script>
 	<script src="js/editFactories.js"></script>
 	<script src="js/jwtController.js"></script>
+
+<style type="text/css">
+body {
+margin:40px auto;
+max-width:650px;
+line-height:1.6;
+font-size:18px;
+color:#222;
+background: #eee;
+padding:0 10px }
+h1,h2,h3 {
+line-height:1.2
+}
+</style>
 </head>
 	<body ng-controller="UsersController as usersCtrl">
 
-		<nav>
+		<nav><h3>
 			<a ui-sref="login">login</a>
 			<a ui-sref="signup">signup</a>
 			<a ui-sref="home">home</a>
 			<a ui-sref="search">search</a>
-			<a ui-sref="newplaylist">new playlist</a>
+			<a ui-sref="newplaylist">new playlist</a></h3>
 		</nav>
 
 		<div class="container">
