@@ -21,7 +21,7 @@ function create(req, res){
 			if(err) console.log("user playlist error", err);
 			//console.log("adding playlist to user, user:",user);
 			//user.playlists += playlist._id
-			user.playlists.push(playlist._id)
+			user.playlists.push(playlist)
 			console.log("user after playlist added",user);
 			user.save(function(err,user) {
 				if(err) console.log("user save error",err);

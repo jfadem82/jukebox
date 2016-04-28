@@ -27,6 +27,12 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.userName = ''
 	vm.addPlaylist = addPlaylist
 	vm.indexPlaylists = indexPlaylists
+	vm.nextsong = nextsong
+
+	function nextsong() {
+		//vm.playlist
+		console.log("nextsong function running!!!!!!!!!!!!!!!!!!!");
+	}
 
 	function addtoPL(song) {
 		console.log("song from function addtoPL",song);
@@ -103,6 +109,7 @@ function indexPlaylists() {
 	$http.get('http://localhost:3000/api/users/id/'+$window.localStorage['currentUser'])
 	.then(function(response) {
 		console.log("get a user playlist. response:", response);
+
 		//vm.user.playlists = response.data.playlists
 	})
 }

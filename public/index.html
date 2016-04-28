@@ -51,12 +51,28 @@
 		      // set new volume level
 		      widget.setVolume(50);
 		      // get the value of the current position
+					widget.getDuration(function(duration) {
+						console.log("duration",duration);
+						// var ourPosition = 0
+						// while(ourPosition < duration)
+						// widget.getPosition(function(position){
+						// 	ourPosition = position
+						// 	console.log("get position thing happening", position);
+						// })
+					})
+					//////////////////// Essential Event Finish ///////////////////////
+					widget.bind(SC.Widget.Events.FINISH, function(){
+            var div = document.getElementById('next')
+						div.setAttribute("ng-init", "usersCtrl.nextsong()")
+						console.log("the finish thing is happening!!!!!!!!");
+          })
+					//////////////////// Essential Event Finish ///////////////////////
+					var div = document.getElementById('next')
+					div.setAttribute("ng-init", "usersCtrl.nextsong()")
 		    });
-
-		  }());
+			}());
 		</script>
-
-		<a ui-sref="search">Search for a song</a>
+		<div id="next"></div>
 
 
 	</body>

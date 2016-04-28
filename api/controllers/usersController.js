@@ -38,11 +38,15 @@ function show(req, res){
 }
 function showbyid(req, res){
 	//get a single user -- show
-  console.log("show user req.params", req.params);
-	User.findOne({_id: req.params.id}, function(err, user){
-		if(err) res.send(err)
-		res.json(user)
-	})
+  //console.log("show user req.params", req.params);
+
+  User.findOne({_id: req.params.id})
+  .populate('playlists')
+  .exec(function(err,user){
+    if(err) console.log("populating playlists error",err);
+    //console.log("user returned after populating playlists",user);
+    res.json(user)
+  })
 }
 
 module.exports = {
