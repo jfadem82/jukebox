@@ -61,19 +61,13 @@ line-height:1.2
 		      });
 		      // get current level of volume
 		      widget.getVolume(function(volume) {
-		        console.log('current volume value is ' + volume);
+		        //console.log('current volume value is ' + volume);
 		      });
 		      // set new volume level
 		      widget.setVolume(50);
 		      // get the value of the current position
 					widget.getDuration(function(duration) {
-						console.log("duration",duration);
-						// var ourPosition = 0
-						// while(ourPosition < duration)
-						// widget.getPosition(function(position){
-						// 	ourPosition = position
-						// 	console.log("get position thing happening", position);
-						// })
+						//console.log("duration",duration);
 					})
 					//////////////////// Essential Event Finish ///////////////////////
 					widget.bind(SC.Widget.Events.FINISH, function(){
