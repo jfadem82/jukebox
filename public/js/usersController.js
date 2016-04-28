@@ -28,6 +28,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.addPlaylist = addPlaylist
 	vm.indexPlaylists = indexPlaylists
 	vm.nextsong = nextsong
+	vm.url = ''
 
 	function nextsong() {
 		//vm.playlist
@@ -129,6 +130,8 @@ function setPlaylist() {
 	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
 		console.log("this here is the results of playlist",results)
 		vm.playlist = results
+		vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
+		console.log("vm.url",vm.url);
 	})
 }
 if ($state.current.name == 'detail') {
