@@ -40,13 +40,15 @@ function getOnePlaylist(req,res){
 }
 
 function updatePlaylist(req,res){
-	console.log("updating playlist in back end")
-	Playlist.findOneAndUpdate({_id: req.params.id}, req.body, function(err,playlist){
-		if(err) throw err
-		Playlist.findById(req.params.id, function(err,updatedPlaylist){
-			res.json(updatedPlaylist)
-		})
-	})
+	console.log("updating playlist in back end, req:",req)
+	// Playlist.findOne({_id: req.params.id}, function(err,playlist){
+	// 	playlist.songs.push(req.body.songId)
+	// 	playlist.save(function(err,playlist) {
+	// 		if(err) console.log("playlist save error", err);
+	// 		console.log("playlist with added song", playlist);
+	// 		res.json({message: "playlist updated",playlist:playlist})
+	// 	})
+	// })
 }
 
 function deletePlaylist(req,res){

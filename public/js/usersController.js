@@ -34,8 +34,12 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 		console.log("nextsong function running!!!!!!!!!!!!!!!!!!!");
 	}
 
-	function addtoPL(song) {
-		console.log("song from function addtoPL",song);
+	function addtoPL(data) {
+		//console.log("data from function addtoPL",data);
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId})
+		.then(function(response) {
+			console.log("response from patch playlist",response);
+		})
 	}
 
 	function getArtist(artist){
