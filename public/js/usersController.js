@@ -28,6 +28,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.addPlaylist = addPlaylist
 	vm.indexPlaylists = indexPlaylists
 	vm.nextsong = nextsong
+	vm.url = ''
 
 	function nextsong() {
 		//vm.playlist
@@ -36,8 +37,10 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 
 	function addtoPL(data) {
 		//console.log("data from function addtoPL",data);
-		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId})
+		console.log("vm.playlist",data);
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId, songs:data.playlist.songs})
 		.then(function(response) {
+			setPlaylist()
 			console.log("response from patch playlist",response);
 		})
 	}
@@ -122,12 +125,17 @@ if ($state.current.name == 'playlists') {
 	//console.log("vm.user:",vm.user);
 }
 
-if ($state.current.name == 'detail') {
+function setPlaylist() {
 	//console.log("state parmas", $stateParams.playlistId);
 	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
 		console.log("this here is the results of playlist",results)
 		vm.playlist = results
+		vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
+		console.log("vm.url",vm.url);
 	})
+}
+if ($state.current.name == 'detail') {
+	setPlaylist()
 }
 // vm.playlists.list = function(){
 // 	return $http.get(playlistsUrl)
