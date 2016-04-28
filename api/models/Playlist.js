@@ -4,7 +4,6 @@ var Schema = mongoose.Schema
 
 var songSchema = new Schema ({
 	title: String,
-	length: Number,
 	id: String
 })
 
@@ -16,7 +15,6 @@ var playlistSchema = new Schema ({
 	ref: 'User'
 	}],
 	songs: [songSchema]
-
 })
 
 var Playlist = mongoose.model('Playlist', playlistSchema)
