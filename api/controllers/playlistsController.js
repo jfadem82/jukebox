@@ -40,7 +40,7 @@ function getOnePlaylist(req,res){
 }
 
 function updatePlaylist(req,res){
-	console.log("updating playlist in back end, req:",req)
+	console.log("updating playlist in back end, req:",req.body)
 	// Playlist.findOne({_id: req.params.id}, function(err,playlist){
 	// 	playlist.songs.push(req.body.songId)
 	// 	playlist.save(function(err,playlist) {
