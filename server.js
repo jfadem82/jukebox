@@ -10,7 +10,7 @@ var express 			= require('express'),
 	cors				= require('cors'),
 	apiRouter			= require('./api/routes/Routes.js')
 	port 				= process.env.PORT || 3000,
-	mongoUri			= process.env.mLab || 'mongodb://localhost:27017/jukebox'
+	mongoUri			= process.env.MLAB_URI || 'mongodb://localhost:27017/jukebox'
 
 mongoose.connect(mongoUri)
 
