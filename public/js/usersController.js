@@ -38,7 +38,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	function addtoPL(data) {
 		//console.log("data from function addtoPL",data);
 		console.log("vm.playlist",data);
-		$http.patch('https://jukebox-pmi.herokuapp.com/api/playlists/'+data.playlistId, {songId:data.songId, songs:data.playlist.songs})
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId, songs:data.playlist.songs})
 		.then(function(response) {
 			setPlaylist()
 			console.log("response from patch playlist",response);
@@ -87,7 +87,7 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	function signup(userName){
 		var newUser = {userName:userName}
 		console.log("signup newUser",newUser );
-		return $http.post('https://jukebox-pmi.herokuapp.com/api/users', newUser).then(function(response) {
+		return $http.post('http://localhost:3000/api/users', newUser).then(function(response) {
 			console.log("successfully sent a user. response:", response);
 			vm.user = response.data
 			login(userName)
@@ -97,9 +97,9 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	function login(userName){
 		var user = {userName:userName}
 		console.log("login user", user);
-		return $http.get('https://jukebox-pmi.herokuapp.com/api/users/:user_id', user).then(function(response) {
+		return $http.get('http://localhost:3000/api/users/:user_id', user).then(function(response) {
 			console.log("successfully logged in a user. response:", response);
-		return $http.get('https://jukebox-pmi.herokuapp.com/api/users/'+userName)
+		return $http.get('http://localhost:3000/api/users/'+userName)
 		.then(function(response){
 			console.log("login response:",response)
 			$window.localStorage['currentUser'] = response.data._id
@@ -109,11 +109,11 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	}
 
 // function playlistsFactory($http){
-// 	var playlistsUrl = 'https://jukebox-pmi.herokuapp.com/api/playlists'
+// 	var playlistsUrl = 'http://localhost:3000/api/playlists'
 // 	var playlists = {}
 function indexPlaylists() {
 	//return
-	$http.get('https://jukebox-pmi.herokuapp.com/api/users/id/'+$window.localStorage['currentUser'])
+	$http.get('http://localhost:3000/api/users/id/'+$window.localStorage['currentUser'])
 	.then(function(response) {
 		//console.log("get a user playlist. response:", response);
 		vm.playlists = response.data.playlists
@@ -127,7 +127,7 @@ if ($state.current.name == 'playlists') {
 
 function setPlaylist() {
 	//console.log("state parmas", $stateParams.playlistId);
-	$http.get('https://jukebox-pmi.herokuapp.com/api/playlists/'+ $stateParams.playlistId).success(function(results){
+	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
 		console.log("this here is the results of playlist",results)
 		vm.playlist = results
 		vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
@@ -181,7 +181,7 @@ if ($state.current.name == 'detail') {
 	// function signup(userName){
 	// 	var newUser = {userName:userName}
 	// 	console.log("signup newUser",newUser );
-	// 	return $http.post('https://jukebox-pmi.herokuapp.com/api/users', newUser).then(function(response) {
+	// 	return $http.post('http://localhost:3000/api/users', newUser).then(function(response) {
 	// 		console.log("successfully sent a user. response:", response);
 	// 		vm.user = response.data
 	// 		login(userName)
@@ -193,7 +193,7 @@ function addPlaylist(playlistName){
 	var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
 		//console.log('creating newPlaylist, data:', data);
 		console.log('creating newPlaylist', newPlaylist);
-		return $http.post('https://jukebox-pmi.herokuapp.com/api/playlists', newPlaylist).then(function(response){
+		return $http.post('http://localhost:3000/api/playlists', newPlaylist).then(function(response){
 		 console.log("successfully sent a playlist. response:", response);
 		 vm.playlist = response.data
 		})
