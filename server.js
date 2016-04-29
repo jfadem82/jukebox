@@ -1,16 +1,16 @@
 
 var express 			= require('express'),
-	app							= express(),
+	app					= express(),
 	bodyParser			= require('body-parser'),
 	cookieParser 		= require('cookie-parser'),
-	methodOverride	= require('method-override'),
-	morgan					= require('morgan'),
-	path						= require('path'),
-	mongoose				= require('mongoose'),
-	cors						= require('cors'),
-	apiRouter				= require('./api/routes/Routes.js')
-	port 						= process.env.PORT,
-	mongoUri				= process.env.mLab
+	methodOverride		= require('method-override'),
+	morgan				= require('morgan'),
+	path				= require('path'),
+	mongoose			= require('mongoose'),
+	cors				= require('cors'),
+	apiRouter			= require('./api/routes/Routes.js')
+	port 				= process.env.PORT || 3000,
+	mongoUri			= process.env.mLab || 'mongodb://localhost:27017/jukebox'
 
 mongoose.connect(mongoUri)
 
