@@ -149,6 +149,7 @@ if ($state.current.name == 'playlists') {
 }
 function startPlaylist() {
 	console.log("startPlaylist is running");
+	vm.currentSong = 0
 	vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
 	console.log("vm.url:", vm.url);
 }
