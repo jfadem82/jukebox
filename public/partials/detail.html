@@ -65,6 +65,7 @@
 
 
 <form>
+  <h3>Search Artist or Song Name</h3>
   <div class="form-group">
     <input class="form-control" ng-model="usersCtrl.artist.name" type="text" placeholder="an artist">
     <button class="btn btn-primary form-control" type="submit" ng-click="usersCtrl.getArtist(usersCtrl.artist)">Get Songs</button>
@@ -74,26 +75,23 @@
 <br>
 <br>
 
+<label ng-if="usersCtrl.ifSongs()">Filter Search Results: <input ng-model="searchText"></label>
 
-<h2>find a song: Search Artist or Song Name</h2>
-<label>Search: <input ng-model="searchText"></label>
-
-<table id="searchTextResults" class="table">
+<table ng-if="usersCtrl.ifSongs()" id="searchTextResults" class="table">
     <thead>
         <tr>
-            <th>Songs to add</th>
+            <th>Songs that match that search</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="s in usersCtrl.songs | filter:searchText">
-            <td><a href="#" ng-click="usersCtrl.addtoPL({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist})">{{s.title}}</a></td>
+            <td><a href="#" ng-click="usersCtrl.addtoPL({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})">{{s.title}}</a></td>
         </tr>
     </tbody>
 </table>
 
 <h1>Songs on the playlist</h1>
-<h1>{{usersCtrl.playlist.name}}</h1>
-<label>Search: <input ng-model="searchText"></label>
+<label>Filter: <input ng-model="searchText"></label>
 
 <table id="searchTextResults" class="table">
     <thead>
@@ -104,8 +102,8 @@
     <tbody>
         <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
             <td>
-              {{s.id}}
-              <button type="button" ng-clic="usersCtrl.removeSong()" name="button">Remove Song</button>
+              {{s.title}}
+              <button type="button" ng-clic="usersCtrl.removeSong(s._id)" name="button">Remove Song</button>
             </td>
         </tr>
     </tbody>

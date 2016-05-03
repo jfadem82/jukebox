@@ -44,7 +44,7 @@ function updatePlaylist(req,res){
 
 	var songss = req.body.songs
 	var newSong = {
-		//title: req.body.title,
+		title: req.body.title,
 		id: req.body.songId
 	}
 	songss.push(newSong)
