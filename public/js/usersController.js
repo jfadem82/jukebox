@@ -32,14 +32,30 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.originUrl = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'
 	vm.startPlaylist = startPlaylist
 	vm.currentSong = 0
+	vm.previousSong = previousSong
 
 	function nextsong() {
 		//vm.playlist
-		vm.currentSong += 1
-		console.log("playlist song:",vm.playlist.songs[vm.currentSong]);
-		vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
-		console.log("playlist:url:",vm.url);
-
+		if (vm.currentSong < vm.playlist.songs.length - 1) {
+			vm.currentSong += 1
+			vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
+		}else {
+			vm.currentSong = 0
+			vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
+			console.log("playlist:url:",vm.url);
+		}
+		//console.log("playlist length:",vm.playlist.songs.length);
+		console.log("currentSong:",vm.currentSong);
+	}
+	function previousSong() {
+		if (vm.currentSong > 0) {
+			vm.currentSong -= 1
+			vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
+		}else{
+			vm.currentSong = vm.playlist.songs.length - 1
+			vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
+		}
+		console.log("currentSong", vm.currentSong);
 	}
 
 	function addtoPL(data) {
@@ -133,6 +149,7 @@ if ($state.current.name == 'playlists') {
 }
 function startPlaylist() {
 	console.log("startPlaylist is running");
+	vm.currentSong = 0
 	vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
 	console.log("vm.url:", vm.url);
 }
