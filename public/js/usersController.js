@@ -29,10 +29,17 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.indexPlaylists = indexPlaylists
 	vm.nextsong = nextsong
 	vm.url = ''
+	vm.originUrl = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'
+	vm.startPlaylist = startPlaylist
+	vm.currentSong = 0
 
 	function nextsong() {
 		//vm.playlist
-		console.log("nextsong function running!!!!!!!!!!!!!!!!!!!");
+		vm.currentSong += 1
+		console.log("playlist song:",vm.playlist.songs[vm.currentSong]);
+		vm.url = vm.originUrl + vm.playlist.songs[vm.currentSong].id
+		console.log("playlist:url:",vm.url);
+
 	}
 
 	function addtoPL(data) {
@@ -124,14 +131,18 @@ if ($state.current.name == 'playlists') {
 	indexPlaylists()
 	//console.log("vm.user:",vm.user);
 }
-
+function startPlaylist() {
+	console.log("startPlaylist is running");
+	vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
+	console.log("vm.url:", vm.url);
+}
 function setPlaylist() {
 	//console.log("state parmas", $stateParams.playlistId);
 	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
-		console.log("this here is the results of playlist",results)
+		//console.log("this here is the results of playlist",results)
 		vm.playlist = results
-		vm.url = 'https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/'+vm.playlist.songs[0].id
-		console.log("vm.url",vm.url);
+
+		//console.log("vm.url",vm.url);
 	})
 }
 if ($state.current.name == 'detail') {
