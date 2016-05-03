@@ -29,4 +29,7 @@ apiRouter.route('/playlists/:id')
 	.patch(playlistsController.updatePlaylist)
 	.delete(playlistsController.deletePlaylist)
 
+apiRouter.route('/playlists/:id/remove')
+	.patch(playlistsController.removeSong)
+
 module.exports = apiRouter

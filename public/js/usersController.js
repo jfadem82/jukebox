@@ -69,6 +69,15 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 			console.log("response from patch playlist",response);
 		})
 	}
+	function removeSong(data) {
+		console.log("data from function removeSong",data);
+		console.log("vm.playlist",data);
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId+'/remove', {songId:data.songId, songs:data.playlist.songs, title:data.title})
+		.then(function(response) {
+			setPlaylist()
+			console.log("response from patch playlist",response);
+		})
+	}
 	function addPlaylist(playlistName){
 		var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
 		//console.log('creating newPlaylist, data:', data);
@@ -78,12 +87,12 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 		 vm.playlist = response.data
 		})
 	}
-	function removeSong() {
-		
-	}
+	// function removeSong(id) {
+	//
+	// }
 	function ifSongs() {
-		console.log("ifSongs is working");
-		console.log("ifSongs song 0:",vm.songs[0]);
+		//console.log("ifSongs is working");
+		//console.log("ifSongs song 0:",vm.songs[0]);
 		if (vm.songs[0]) {
 			return true
 		}
@@ -179,8 +188,6 @@ function setPlaylist() {
 	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
 		//console.log("this here is the results of playlist",results)
 		vm.playlist = results
-
-		//console.log("vm.url",vm.url);
 	})
 }
 if ($state.current.name == 'detail') {

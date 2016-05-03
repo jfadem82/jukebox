@@ -67,7 +67,7 @@
 <form>
   <h3>Search Artist or Song Name</h3>
   <div class="form-group">
-    <input class="form-control" ng-model="usersCtrl.artist.name" type="text" placeholder="an artist">
+    <input class="form-control" ng-model="usersCtrl.artist.name" type="text" placeholder="search">
     <button class="btn btn-primary form-control" type="submit" ng-click="usersCtrl.getArtist(usersCtrl.artist)">Get Songs</button>
   </div>
 
@@ -80,7 +80,7 @@
 <table ng-if="usersCtrl.ifSongs()" id="searchTextResults" class="table">
     <thead>
         <tr>
-            <th>Songs that match that search</th>
+            <th>Songs that match that search: click to add</th>
         </tr>
     </thead>
     <tbody>
@@ -103,7 +103,7 @@
         <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
             <td>
               {{s.title}}
-              <button type="button" ng-clic="usersCtrl.removeSong(s._id)" name="button">Remove Song</button>
+              <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
             </td>
         </tr>
     </tbody>
