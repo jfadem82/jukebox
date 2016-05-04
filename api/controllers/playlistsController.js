@@ -40,22 +40,41 @@ function getOnePlaylist(req,res){
 }
 
 function updatePlaylist(req,res){
-	console.log("req body",req.body);
-
+	console.log("removeSong req body",req.body);
+	//console.log("update playlist req body",req.body);
 	var songss = req.body.songs
 	var newSong = {
-		//title: req.body.title,
+		title: req.body.title,
 		id: req.body.songId
 	}
 	songss.push(newSong)
 	var updatedPlaylist = {
 		songs: songss
 	}
-	//console.log("songs on backend",songs);
-
 	Playlist.findOneAndUpdate({_id: req.params.id}, updatedPlaylist, {new: true}, function(err, playlist){
 		if(err) return console.log(err)
 		console.log("playlist after adding song", playlist);
+		res.json({success: true, message: "Playlist updated!", playlist: playlist})
+	})
+	//console.log("songs on backend",songs);
+}
+
+function removeSong(req,res) {
+	//console.log("removeSong req body",req.body);
+	var songss = req.body.songs
+	//console.log("songss",songss);
+	var list = []
+	songss.forEach(function(el,index) {
+		list.push(el.id)
+	})
+	//console.log("indexOf song in list",list.indexOf(req.body.songId));
+	songss.splice(list.indexOf(req.body.songId),1)
+	var updatedPlaylist = {
+		songs: songss
+	}
+	Playlist.findOneAndUpdate({_id: req.params.id}, updatedPlaylist, {new: true}, function(err, playlist){
+		if(err) return console.log(err)
+		console.log("playlist after deleting song", playlist);
 		res.json({success: true, message: "Playlist updated!", playlist: playlist})
 	})
 }
@@ -72,5 +91,6 @@ module.exports = {
   create: create,
   getOnePlaylist: getOnePlaylist,
   updatePlaylist: updatePlaylist,
-	deletePlaylist: deletePlaylist
+	deletePlaylist: deletePlaylist,
+	removeSong: removeSong
 }

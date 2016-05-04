@@ -33,6 +33,8 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.startPlaylist = startPlaylist
 	vm.currentSong = 0
 	vm.previousSong = previousSong
+	vm.ifSongs = ifSongs
+	vm.removeSong = removeSong
 
 	function nextsong() {
 		//vm.playlist
@@ -61,13 +63,41 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	function addtoPL(data) {
 		//console.log("data from function addtoPL",data);
 		console.log("vm.playlist",data);
-		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId, songs:data.playlist.songs})
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {songId:data.songId, songs:data.playlist.songs, title:data.title})
 		.then(function(response) {
 			setPlaylist()
 			console.log("response from patch playlist",response);
 		})
 	}
-
+	function removeSong(data) {
+		console.log("data from function removeSong",data);
+		console.log("vm.playlist",data);
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId+'/remove', {songId:data.songId, songs:data.playlist.songs, title:data.title})
+		.then(function(response) {
+			setPlaylist()
+			console.log("response from patch playlist",response);
+		})
+	}
+	function addPlaylist(playlistName){
+		var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
+		//console.log('creating newPlaylist, data:', data);
+		console.log('creating newPlaylist', newPlaylist);
+		return $http.post('http://localhost:3000/api/playlists', newPlaylist).then(function(response){
+		 console.log("successfully sent a playlist. response:", response);
+		 vm.playlist = response.data
+		})
+	}
+	// function removeSong(id) {
+	//
+	// }
+	function ifSongs() {
+		//console.log("ifSongs is working");
+		//console.log("ifSongs song 0:",vm.songs[0]);
+		if (vm.songs[0]) {
+			return true
+		}
+		return false
+	}
 	function getArtist(artist){
 		vm.songs=[]
 		console.log("req from form", artist);
@@ -158,8 +188,6 @@ function setPlaylist() {
 	$http.get('http://localhost:3000/api/playlists/'+ $stateParams.playlistId).success(function(results){
 		//console.log("this here is the results of playlist",results)
 		vm.playlist = results
-
-		//console.log("vm.url",vm.url);
 	})
 }
 if ($state.current.name == 'detail') {
@@ -215,17 +243,6 @@ if ($state.current.name == 'detail') {
 	// 		login(userName)
 	// 	})
 	// }
-
-function addPlaylist(playlistName){
-
-	var newPlaylist = {playlistName:playlistName, playlistDriver:$window.localStorage['currentUser']}
-		//console.log('creating newPlaylist, data:', data);
-		console.log('creating newPlaylist', newPlaylist);
-		return $http.post('http://localhost:3000/api/playlists', newPlaylist).then(function(response){
-		 console.log("successfully sent a playlist. response:", response);
-		 vm.playlist = response.data
-		})
-	}
 
 // function PlaylistDetailsController(playlistsFactory,$stateParams,$location){
 // 	var vm = this
