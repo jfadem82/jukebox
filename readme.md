@@ -8,7 +8,10 @@ Mean Stack
 
 ## Team
 
-Matthias Jordan - Product Manager
-Angel Pang - UX Designer
-Josh Fadem - Developer
-Nate Castor - Developer
+[Matthias Jordan - Product Manager](http://iammatthias.com)
+
+[Angel Pang - UX Designer](https://angelpangux.com)
+
+[Josh Fadem - Developer](http://joshfadem.la)
+
+[Nate Castor - Developer](https://github.com/nathan-castor)
