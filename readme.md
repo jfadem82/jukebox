@@ -4,9 +4,7 @@
 
 ## Technical Information
 
-## Design
-
-![]()
+Mean Stack
 
 ## Team
 
