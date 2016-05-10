@@ -90,25 +90,32 @@
     </tbody>
 </table>
 
-<h1>Songs on the playlist</h1>
-<label>Filter: <input ng-model="searchText"></label>
+<!-- <div ng-controller="CollapseDemoCtrl">
+	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Songs</button>
+	<hr>
+	<div uib-collapse="!isCollapsed"> -->
+		<!-- <div class="well well-lg">Some content</div> -->
+    <!-- <h1>Songs on the playlist</h1>
+    <label>Filter: <input ng-model="searchText"></label>
 
-<table id="searchTextResults" class="table">
-    <thead>
-        <tr>
-            <th>Songs On the playlist</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
-            <td>
-              {{s.title}}
-              <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <table id="searchTextResults" class="table">
+        <thead>
+            <tr>
+                <th>Songs On the playlist</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
+                <td>
+                  {{s.title}}
+                  <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
+	</div>
+</div> -->
 
 <div ng-controller="AccordionDemoCtrl">
   <script type="text/ng-template" id="group-template.html">
@@ -125,49 +132,121 @@
     </div>
   </script>
 
-  <p>
+  <!-- <p>
     <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
     <button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
-  </p>
+  </p> -->
 
-  <div class="checkbox">
+  <!-- <div class="checkbox">
     <label>
       <input type="checkbox" ng-model="oneAtATime">
       Open only one at a time
     </label>
-  </div>
+  </div> -->
   <uib-accordion close-others="oneAtATime">
-    <uib-accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-      This content is straight in the template.
+    <uib-accordion-group heading="Songs on the playlist!" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+      <label>Search: <input ng-model="searchText"></label>
+      <table id="searchTextResults" class="table">
+          <thead>
+              <tr>
+                  <th>Songs On the playlist</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
+                  <td>
+                    {{s.title}}
+                    <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
     </uib-accordion-group>
-    <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-      {{group.content}}
+    <!-- Find users to add to playlist -->
+    <uib-accordion-group heading="Find Users">
+      <form>
+        <!-- <h3>Search by User Name</h3> -->
+        <div class="form-group">
+          <!-- <input class="form-control" ng-model="usersCtrl.artist.name" type="text" placeholder="search"> -->
+          <button class="btn btn-primary form-control" type="submit" ng-click="usersCtrl.indexUsers()">Get Users</button>
+        </div>
+
+      </form>
+      <br>
+      <br>
+      <label>Filter Search Results: <input ng-model="searchText"></label>
+      <!--
+        Things to add:
+          indexUsers function
+          usersCtrl.users on the playlist
+          addUsertoPL function
+      -->
+      <table id="searchTextResults" class="table">
+          <thead>
+              <tr>
+                  <th>Users that match that search: click to add</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="u in usersCtrl.users | filter:searchText">
+                  <td>
+                    <a>{{u.userName}}</a>
+                    <button type="button" ng-click="usersCtrl.addUsertoPL({userId:u._id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist})" name="button">Add to Playlist</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
     </uib-accordion-group>
-    <uib-accordion-group heading="Dynamic Body Content">
-      <p>The body of the uib-accordion group grows to fit the contents</p>
-      <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-      <div ng-repeat="item in items">{{item}}</div>
-    </uib-accordion-group>
-    <uib-accordion-group heading="Custom template" template-url="group-template.html">
-      Hello
-    </uib-accordion-group>
-    <uib-accordion-group heading="Delete account" panel-class="panel-danger">
-      <p>Please, to delete your account, click the button below</p>
-      <button class="btn btn-danger">Delete</button>
-    </uib-accordion-group>
-    <uib-accordion-group is-open="status.open">
-      <uib-accordion-heading>
-        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-      </uib-accordion-heading>
-      This is just some content to illustrate fancy headings.
+
+    <uib-accordion-group heading="Users on the playlist">
+      <label>Search: <input ng-model="searchText"></label>
+      <!--
+        Things to add:
+          getUsersOnPL function
+          usersCtrl.users on the playlist
+          addUsertoPL function
+      -->
+      <table id="searchTextResults" class="table">
+          <thead>
+              <tr>
+                  <th>Users On the playlist</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="u in usersCtrl.playlist.guests | filter:searchText">
+                  <td>
+                    {{u}}
+                    <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Users: not yet</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
     </uib-accordion-group>
   </uib-accordion>
 </div>
 
-<div ng-controller="CollapseDemoCtrl">
-	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
-	<hr>
-	<div uib-collapse="isCollapsed">
-		<div class="well well-lg">Some content</div>
-	</div>
-</div>
+
+<!-- <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+  {{group.content}}
+</uib-accordion-group>
+<uib-accordion-group heading="Dynamic Body Content">
+  <p>The body of the uib-accordion group grows to fit the contents</p>
+  <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+  <div ng-repeat="item in items">{{item}}</div>
+</uib-accordion-group>
+<uib-accordion-group heading="Custom template" template-url="group-template.html">
+  Hello
+</uib-accordion-group>
+<uib-accordion-group heading="Delete account" panel-class="panel-danger">
+  <p>Please, to delete your account, click the button below</p>
+  <button class="btn btn-danger">Delete</button>
+</uib-accordion-group>
+<uib-accordion-group is-open="status.open">
+  <uib-accordion-heading>
+    I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+  </uib-accordion-heading>
+  This is just some content to illustrate fancy headings.
+</uib-accordion-group> -->

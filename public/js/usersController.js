@@ -35,6 +35,11 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 	vm.previousSong = previousSong
 	vm.ifSongs = ifSongs
 	vm.removeSong = removeSong
+	vm.getUsers = getUsers
+	vm.indexUsers = indexUsers
+	vm.users = []
+	vm.addUsertoPL = addUsertoPL
+
 
 	function nextsong() {
 		//vm.playlist
@@ -125,16 +130,57 @@ function UsersController($state, authFactory, $rootScope, $window, $editFactory,
 		authFactory.logout();
 		$window.location.reload();
 	}
-
 	function getUser(){
-		authFactory.getUser()
-		.then(function(response){
-			// console.log("response.data is " +JSON.stringify(response.data))
-			vm.user = response.data
-			// console.log("vm.user is " + JSON.stringify(vm.user.userid))
-			vm.userid = vm.user.userid
-			console.log("vm.userid is " + vm.userid)
+		// authFactory.getUser()
+		// .then(function(response){
+		// 	// console.log("response.data is " +JSON.stringify(response.data))
+		// 	vm.user = response.data
+		// 	// console.log("vm.user is " + JSON.stringify(vm.user.userid))
+		// 	vm.userid = vm.user.userid
+		// 	console.log("vm.userid is " + vm.userid)
+		// })
+	}
+	function indexUsers(){
+		vm.users=[]
+		//console.log("req from form",);
+    $http({
+      method: 'GET',
+      url : 'http://localhost:3000/api/users'
+    })
+    .then(function(response){ //promise
+			for (var i = 0; i < response.data.length; i++) {
+				vm.users.push(response.data[i])
+			}
+			console.log("vm.users",vm.users);
+			//console.log("response",response);
+    })
+	}
+	function addUsertoPL(data) {
+		console.log("data from function addUsertoPL",data);
+		console.log("vm.playlist",data);
+		$http.patch('http://localhost:3000/api/playlists/'+data.playlistId, {userId:data.userId, guests:data.playlist.guests})
+		.then(function(response) {
+			setPlaylist()
+			console.log("response from patch playlist",response);
 		})
+	}
+	// gets users on the playlist
+	function getUsers(){
+		// Rewrite this it's not the right thing
+
+		// vm.users=[]
+		// console.log("req from form", artist);
+    // $http({
+    //   method: 'GET',
+    //   url : 'http://localhost:3000/api/users'
+    // })
+    // .then(function(response){ //promise
+		// 	for (var i = 0; i < response.data.length; i++) {
+		// 		vm.users.push(response.data[i])
+		// 	}
+		// 	console.log("vm.songs",vm.songs);
+		// 	//console.log("response",response);
+    // })
 	}
 
 	function signup(userName){
