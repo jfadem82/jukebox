@@ -59,9 +59,9 @@
     });
   }());
 </script>
-<button type="button" id="start" name="button" ng-click="usersCtrl.startPlaylist()">Start Playlist</button>
-<button type="button" id="next" name="button" ng-click="usersCtrl.nextsong()">Next Song</button>
-<button type="button" id="last" name="button" ng-click="usersCtrl.previousSong()">Previous Song</button>
+<button type="button" id="start" class="add-remove" name="button" ng-click="usersCtrl.startPlaylist()">Start Playlist</button>
+<button type="button" id="next" class="add-remove" name="button" ng-click="usersCtrl.nextsong()">Next Song</button>
+<button type="button" id="last" class="add-remove" name="button" ng-click="usersCtrl.previousSong()">Previous Song</button>
 
 
 <form>
@@ -75,7 +75,7 @@
 <br>
 <br>
 
-<label ng-if="usersCtrl.ifSongs()">Filter Search Results: <input ng-model="searchText"></label>
+<label ng-if="usersCtrl.ifSongs()">Filter Search Results: <input class="input-box" ng-model="searchText"></label>
 
 <table ng-if="usersCtrl.ifSongs()" id="searchTextResults" class="table">
     <thead>
@@ -145,7 +145,7 @@
   </div> -->
   <uib-accordion close-others="oneAtATime">
     <uib-accordion-group heading="Songs on the playlist!" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-      <label>Search: <input ng-model="searchText"></label>
+      <label>Search: <input class="input-box" ng-model="searchText"></label>
       <table id="searchTextResults" class="table">
           <thead>
               <tr>
@@ -156,7 +156,7 @@
               <tr ng-repeat="s in usersCtrl.playlist.songs | filter:searchText">
                   <td>
                     {{s.title}}
-                    <button type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
+                    <button class="add-remove" type="button" ng-click="usersCtrl.removeSong({songId:s.id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist, title:s.title})" name="button">Remove Song</button>
                   </td>
               </tr>
           </tbody>
@@ -175,7 +175,7 @@
       </form>
       <br>
       <br>
-      <label>Filter Search Results: <input ng-model="searchText"></label>
+      <label>Filter Search Results: <input class="input-box" ng-model="searchText"></label>
       <!--
         Things to add:
           indexUsers function
@@ -192,7 +192,7 @@
               <tr ng-repeat="u in usersCtrl.users | filter:searchText">
                   <td>
                     <a>{{u.userName}}</a>
-                    <button type="button" ng-click="usersCtrl.addUsertoPL({userId:u._id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist})" name="button">Add to Playlist</button>
+                    <button class="add-remove"style="border: solid 1px;" type="button" ng-click="usersCtrl.addUsertoPL({userId:u._id, playlistId:usersCtrl.playlist._id, playlist:usersCtrl.playlist})" name="button">Add to Playlist</button>
                   </td>
               </tr>
           </tbody>
@@ -201,7 +201,7 @@
     </uib-accordion-group>
 
     <uib-accordion-group heading="Users on the playlist">
-      <label>Search: <input ng-model="searchText"></label>
+      <label>Search: <input class="input-box" ng-model="searchText"></label>
       <!--
         Things to add:
           getUsersOnPL function

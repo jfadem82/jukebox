@@ -1,0 +1,10 @@
+.add-remove{
+  background-color: orange;
+  opacity: 0.75;
+  border-radius: 25px;
+  float: right;
+}
+.input-box{
+  border: solid orange 1px;
+  border-radius: 25px;
+}
