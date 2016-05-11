@@ -40,22 +40,41 @@ function getOnePlaylist(req,res){
 }
 
 function updatePlaylist(req,res){
-	console.log("removeSong req body",req.body);
+	console.log("updatePlaylist req body",req.body);
 	//console.log("update playlist req body",req.body);
-	var songss = req.body.songs
-	var newSong = {
-		title: req.body.title,
-		id: req.body.songId
+	if (req.body.songs) {
+		var songss = req.body.songs
+		var newSong = {
+			title: req.body.title,
+			id: req.body.songId
+		}
+		songss.push(newSong)
+		var updatedPlaylist = {
+			songs: songss
+		}
+		Playlist.findOneAndUpdate({_id: req.params.id}, updatedPlaylist, {new: true}, function(err, playlist){
+			if(err) return console.log(err)
+			console.log("playlist after adding song", playlist);
+			res.json({success: true, message: "Playlist updated!", playlist: playlist})
+		})
+	}else if (req.body.userId) {
+		var users = req.body.guests
+		console.log("update playlist backend: users:", users);
+		// // var newUser = {
+		// // 	id: req.body.userId
+		// // }
+		users.push(req.body.userId)
+		console.log("update playlist backend: users:", users);
+		var updatedPlaylist = {
+			guests: users
+		}
+		Playlist.findOneAndUpdate({_id: req.params.id}, updatedPlaylist, {new: true}, function(err, playlist){
+			if(err) return console.log(err)
+			console.log("playlist after adding guest", playlist);
+			res.json({success: true, message: "Playlist updated added user!", playlist: playlist})
+		})
 	}
-	songss.push(newSong)
-	var updatedPlaylist = {
-		songs: songss
-	}
-	Playlist.findOneAndUpdate({_id: req.params.id}, updatedPlaylist, {new: true}, function(err, playlist){
-		if(err) return console.log(err)
-		console.log("playlist after adding song", playlist);
-		res.json({success: true, message: "Playlist updated!", playlist: playlist})
-	})
+
 	//console.log("songs on backend",songs);
 }
 

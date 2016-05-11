@@ -1,10 +1,9 @@
 angular.module('jukebox')
   .controller('CollapseDemoCtrl', CollapseDemoCtrl)
 
-//CollapseDemoCtrl.$inject = ['$q']
-function CollapseDemoCtrl($q) {
+function CollapseDemoCtrl() {
   vm = this
-  vm.isCollapsed = false;
+  vm.isCollapsed = true;
 }
 // angular.module('jukebox').controller('CollapseDemoCtrl', function ($scope, $q) {
 //   $scope.isCollapsed = false;
